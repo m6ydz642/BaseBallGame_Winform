@@ -153,6 +153,7 @@ namespace BaseBallGame_Winform
             this.buttonBack.TabIndex = 10;
             this.buttonBack.Text = "←";
             this.buttonBack.UseVisualStyleBackColor = true;
+            this.buttonBack.Click += new System.EventHandler(this.buttonBack_Click);
             // 
             // buttonClean
             // 
@@ -162,6 +163,7 @@ namespace BaseBallGame_Winform
             this.buttonClean.TabIndex = 11;
             this.buttonClean.Text = "지우기";
             this.buttonClean.UseVisualStyleBackColor = true;
+            this.buttonClean.Click += new System.EventHandler(this.buttonClean_Click);
             // 
             // buttonStart
             // 
