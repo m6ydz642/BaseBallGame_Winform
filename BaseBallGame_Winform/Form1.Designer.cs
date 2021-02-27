@@ -43,7 +43,7 @@ namespace BaseBallGame_Winform
             this.buttonClean = new System.Windows.Forms.Button();
             this.buttonStart = new System.Windows.Forms.Button();
             this.listView1 = new System.Windows.Forms.ListView();
-            this.labelPress = new System.Windows.Forms.Label();
+            this.inputNumber = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // key1
@@ -129,7 +129,7 @@ namespace BaseBallGame_Winform
             // 
             // buttonRetry
             // 
-            this.buttonRetry.Location = new System.Drawing.Point(94, 229);
+            this.buttonRetry.Location = new System.Drawing.Point(98, 227);
             this.buttonRetry.Name = "buttonRetry";
             this.buttonRetry.Size = new System.Drawing.Size(77, 23);
             this.buttonRetry.TabIndex = 9;
@@ -172,21 +172,22 @@ namespace BaseBallGame_Winform
             this.listView1.TabIndex = 13;
             this.listView1.UseCompatibleStateImageBehavior = false;
             // 
-            // labelPress
+            // inputNumber
             // 
-            this.labelPress.AutoSize = true;
-            this.labelPress.Location = new System.Drawing.Point(65, 63);
-            this.labelPress.Name = "labelPress";
-            this.labelPress.Size = new System.Drawing.Size(23, 12);
-            this.labelPress.TabIndex = 14;
-            this.labelPress.Text = "123";
+            this.inputNumber.Location = new System.Drawing.Point(67, 58);
+            this.inputNumber.Name = "inputNumber";
+            this.inputNumber.ReadOnly = true;
+            this.inputNumber.Size = new System.Drawing.Size(135, 21);
+            this.inputNumber.TabIndex = 15;
+            this.inputNumber.Text = "123";
+            this.inputNumber.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(608, 320);
-            this.Controls.Add(this.labelPress);
+            this.Controls.Add(this.inputNumber);
             this.Controls.Add(this.listView1);
             this.Controls.Add(this.buttonStart);
             this.Controls.Add(this.buttonClean);
@@ -225,7 +226,7 @@ namespace BaseBallGame_Winform
         private System.Windows.Forms.Button buttonClean;
         private System.Windows.Forms.Button buttonStart;
         private System.Windows.Forms.ListView listView1;
-        private System.Windows.Forms.Label labelPress;
+        private System.Windows.Forms.TextBox inputNumber;
     }
 }
 
