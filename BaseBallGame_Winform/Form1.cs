@@ -16,5 +16,10 @@ namespace BaseBallGame_Winform
         {
             InitializeComponent();
         }
+
+        private void Form1_Load(object sender, EventArgs e) // 폼로드
+        {
+
+        }
     }
 }
