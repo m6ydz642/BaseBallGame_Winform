@@ -54,6 +54,7 @@ namespace BaseBallGame_Winform
             this.key1.TabIndex = 0;
             this.key1.Text = "1";
             this.key1.UseVisualStyleBackColor = true;
+            this.key1.Click += new System.EventHandler(this.clickNumber);
             // 
             // key2
             // 
@@ -63,6 +64,7 @@ namespace BaseBallGame_Winform
             this.key2.TabIndex = 1;
             this.key2.Text = "2";
             this.key2.UseVisualStyleBackColor = true;
+            this.key2.Click += new System.EventHandler(this.clickNumber);
             // 
             // key3
             // 
@@ -72,6 +74,7 @@ namespace BaseBallGame_Winform
             this.key3.TabIndex = 2;
             this.key3.Text = "3";
             this.key3.UseVisualStyleBackColor = true;
+            this.key3.Click += new System.EventHandler(this.clickNumber);
             // 
             // key4
             // 
@@ -81,6 +84,7 @@ namespace BaseBallGame_Winform
             this.key4.TabIndex = 3;
             this.key4.Text = "4";
             this.key4.UseVisualStyleBackColor = true;
+            this.key4.Click += new System.EventHandler(this.clickNumber);
             // 
             // key5
             // 
@@ -90,6 +94,7 @@ namespace BaseBallGame_Winform
             this.key5.TabIndex = 4;
             this.key5.Text = "5";
             this.key5.UseVisualStyleBackColor = true;
+            this.key5.Click += new System.EventHandler(this.clickNumber);
             // 
             // key6
             // 
@@ -99,6 +104,7 @@ namespace BaseBallGame_Winform
             this.key6.TabIndex = 5;
             this.key6.Text = "6";
             this.key6.UseVisualStyleBackColor = true;
+            this.key6.Click += new System.EventHandler(this.clickNumber);
             // 
             // key7
             // 
@@ -108,6 +114,7 @@ namespace BaseBallGame_Winform
             this.key7.TabIndex = 6;
             this.key7.Text = "7";
             this.key7.UseVisualStyleBackColor = true;
+            this.key7.Click += new System.EventHandler(this.clickNumber);
             // 
             // key8
             // 
@@ -117,6 +124,7 @@ namespace BaseBallGame_Winform
             this.key8.TabIndex = 7;
             this.key8.Text = "8";
             this.key8.UseVisualStyleBackColor = true;
+            this.key8.Click += new System.EventHandler(this.clickNumber);
             // 
             // key9
             // 
@@ -126,6 +134,7 @@ namespace BaseBallGame_Winform
             this.key9.TabIndex = 8;
             this.key9.Text = "9";
             this.key9.UseVisualStyleBackColor = true;
+            this.key9.Click += new System.EventHandler(this.clickNumber);
             // 
             // buttonRetry
             // 
@@ -179,7 +188,6 @@ namespace BaseBallGame_Winform
             this.inputNumber.ReadOnly = true;
             this.inputNumber.Size = new System.Drawing.Size(135, 21);
             this.inputNumber.TabIndex = 15;
-            this.inputNumber.Text = "123";
             this.inputNumber.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // Form1
