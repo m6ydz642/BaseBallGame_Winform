@@ -41,22 +41,6 @@ namespace BaseBallGame_Winform
             Console.WriteLine("생성자 초기화 값 _statusCheckGame : " + _statusCheckGame);
         }
 
-   /*     public Form1(int _countGame, bool _statusCheckGame) //인자있는 기본생성자
-        {
-          //  InitializeComponent();
-            MessageBox.Show("인자있는 기본생성자");
-            this._countGame = _countGame; // 0회차 부터 (게임 시작시 1부터 ++해서 카운트 할거임
-            this._statusCheckGame = _statusCheckGame;
-            Console.WriteLine("생성자 초기화 값 _countGame : " + _countGame);
-            Console.WriteLine("생성자 초기화 값 _statusCheckGame : " + _statusCheckGame); 
-             listViewGameStart.Items.Clear();
-            //            textRandomNumber.Text = setRandomNumber().ToString(); // 컴퓨터가 만드는 랜덤함수 생성 호출 
-            setRandomNumber();
-
-        }
-*/
-
-
 
         public int[] setRandomNumber() // 컴퓨터가 생성하는 랜덤함수
         {
@@ -73,7 +57,7 @@ namespace BaseBallGame_Winform
                 {
 
                     if (setRandomNumber[j] == setRandomNumber[i]) i--; // 비교후 동일하면 다시 반복문
-                    // 중복이 발견되어 --처리하면 출력은 충복 으로 뜨지만 실제 배열에는
+                    // 중복이 발견되어 --처리하면 출력은 중복 으로 뜨지만 실제 배열에는
                     // 중복이 안들어가있음
                 }
                 _saveRandomNumber = setRandomNumber; // setter에 저장
@@ -171,14 +155,24 @@ namespace BaseBallGame_Winform
 
         private void buttonStart_Click(object sender, EventArgs e) // 게임시작 버튼
         {
-      
-            if (checkNumberLength()  && _countGame < 9 && _statusCheckGame) 
+            bool checkInputNumber = checkNumberLength(); // 입력받은 번호 개수 체크함수
+         /*  bool checkAllNumber = checkRandomNumber_checkInputNumber(_inputNumberSave, 
+           _saveRandomNumber);*/
+
+            if (checkInputNumber && _countGame < 9 && _statusCheckGame) 
                 // 자릿수가 맞고 게임이 시작중이고 회차가 9회미만이라면
             {
 
                 _countGame++; // 게임 회차 카운트
                 if (_countGame <= 1) // 1회차에만 문구 나오게
                     listViewGameStart.Items.Add("게임을 시작합니다");
+
+              string inputNumberString = inputNumber.Text;
+                
+
+                //   Console.WriteLine(inputNumberArray);
+                //                 _inputNumberSave =inputNumberArray;
+
 
                 listViewGameStart.Items.Add(_countGame + "회차 " + inputNumber.Text);
                // inputNumber.Text = ""; // 키패드 값 삭제
@@ -196,6 +190,37 @@ namespace BaseBallGame_Winform
             }
 
 
+        }
+        
+
+
+        private bool checkRandomNumber_checkInputNumber(int[] checkInputNumber, int[] checkRandomNumber
+           ) //setter에 들어있는 값을 가져와 랜덤함수, 입력값 비교
+        {
+            bool checkStatus = false;
+
+            for (int i = 0; i < 3; i++)
+
+            {
+
+
+                for (int j = 0; j < i; j++)
+
+                {
+
+                    if (checkInputNumber[j] == checkRandomNumber[i])
+                        checkStatus = false; 
+
+
+                    else checkStatus = true;
+                    
+                }
+
+
+
+            }
+
+            return checkStatus;
         }
 
         private bool checkNumberLength() // 자리수 체크 함수
