@@ -42,8 +42,9 @@ namespace BaseBallGame_Winform
             this.buttonBack = new System.Windows.Forms.Button();
             this.buttonClean = new System.Windows.Forms.Button();
             this.buttonStart = new System.Windows.Forms.Button();
-            this.listView1 = new System.Windows.Forms.ListView();
+            this.listViewGameStart = new System.Windows.Forms.ListView();
             this.inputNumber = new System.Windows.Forms.TextBox();
+            this.textRandomNumber = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // key1
@@ -174,15 +175,17 @@ namespace BaseBallGame_Winform
             this.buttonStart.TabIndex = 12;
             this.buttonStart.Text = "시작";
             this.buttonStart.UseVisualStyleBackColor = true;
+            this.buttonStart.Click += new System.EventHandler(this.buttonStart_Click);
             // 
-            // listView1
+            // listViewGameStart
             // 
-            this.listView1.HideSelection = false;
-            this.listView1.Location = new System.Drawing.Point(343, 89);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(170, 144);
-            this.listView1.TabIndex = 13;
-            this.listView1.UseCompatibleStateImageBehavior = false;
+            this.listViewGameStart.HideSelection = false;
+            this.listViewGameStart.Location = new System.Drawing.Point(343, 89);
+            this.listViewGameStart.Name = "listViewGameStart";
+            this.listViewGameStart.Size = new System.Drawing.Size(170, 144);
+            this.listViewGameStart.TabIndex = 13;
+            this.listViewGameStart.UseCompatibleStateImageBehavior = false;
+            this.listViewGameStart.View = System.Windows.Forms.View.SmallIcon;
             // 
             // inputNumber
             // 
@@ -193,13 +196,22 @@ namespace BaseBallGame_Winform
             this.inputNumber.TabIndex = 15;
             this.inputNumber.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
+            // textRandomNumber
+            // 
+            this.textRandomNumber.Location = new System.Drawing.Point(98, 267);
+            this.textRandomNumber.Name = "textRandomNumber";
+            this.textRandomNumber.ReadOnly = true;
+            this.textRandomNumber.Size = new System.Drawing.Size(100, 21);
+            this.textRandomNumber.TabIndex = 16;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(608, 320);
+            this.Controls.Add(this.textRandomNumber);
             this.Controls.Add(this.inputNumber);
-            this.Controls.Add(this.listView1);
+            this.Controls.Add(this.listViewGameStart);
             this.Controls.Add(this.buttonStart);
             this.Controls.Add(this.buttonClean);
             this.Controls.Add(this.buttonBack);
@@ -236,8 +248,9 @@ namespace BaseBallGame_Winform
         private System.Windows.Forms.Button buttonBack;
         private System.Windows.Forms.Button buttonClean;
         private System.Windows.Forms.Button buttonStart;
-        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.ListView listViewGameStart;
         private System.Windows.Forms.TextBox inputNumber;
+        private System.Windows.Forms.TextBox textRandomNumber;
     }
 }
 
