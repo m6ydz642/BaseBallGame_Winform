@@ -144,6 +144,7 @@ namespace BaseBallGame_Winform
             this.buttonRetry.TabIndex = 9;
             this.buttonRetry.Text = "재시작";
             this.buttonRetry.UseVisualStyleBackColor = true;
+            this.buttonRetry.Click += new System.EventHandler(this.buttonRetry_Click);
             // 
             // buttonBack
             // 

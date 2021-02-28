@@ -12,12 +12,26 @@ namespace BaseBallGame_Winform
 {
     public partial class Form1 : Form
     {
-        int countGame; // 게임카운트
+        int _countGame; // 게임카운트
+        bool _statusCheckGame;
+
         public Form1() // 기본생성자
         {
             InitializeComponent();
-            countGame = 0; // 0회차 부터 (게임 시작시 1부터 ++해서 카운트 할거임
+            _countGame = 0; // 0회차 부터 (게임 시작시 1부터 ++해서 카운트 할거임
+            _statusCheckGame = true;
         }
+
+        public Form1(int _countGame, bool _statusCheckGame) // 생성자2
+        {
+            InitializeComponent();
+            this._countGame = _countGame;
+            this._statusCheckGame = _statusCheckGame;
+            inputNumber.Text = "";
+            MessageBox.Show("파라메터 생성자 호출");
+           
+        }
+
 
         private void clickNumber(object sender, EventArgs e) // 버튼클릭했을때 이벤트 (임의로 만듦)
         {
@@ -30,6 +44,7 @@ namespace BaseBallGame_Winform
             int lengthNumber = inputNumber.Text.Length;
             if (lengthNumber < 3)
             {
+                _statusCheckGame = false;
                 inputNumber.Text += number.Text;// 형변환해서 넣은 값 text로 꺼낸 후 inputNumber에 텍스트로 담음
             }
             else{
@@ -50,7 +65,7 @@ namespace BaseBallGame_Winform
 
         private void buttonBack_Click(object sender, EventArgs e) // backspace
         {
-            int numberLength = inputNumber.Text.Length;
+            int numberLength = inputNumber.Text.Length; // 입력된 숫자 사이즈
 
             try
             {
@@ -66,9 +81,21 @@ namespace BaseBallGame_Winform
             catch (Exception ex)
             {
                 Console.WriteLine("숫자 Back 예외오류 뜸 : " + ex);
-                MessageBox.Show("숫자 back 알 수 없는 오류가 발생하였습니다 ");
+                MessageBox.Show("숫자 back 예외가 발생하였습니다 ");
             }
 
+        }
+
+        private void buttonRetry_Click(object sender, EventArgs e) // 게임 재시작
+        {
+
+            // new Form1(0, true); //  생성자 호출
+            // 생성자로 입력된값 초기값으로 초기화 할려고 했는데 안되네...
+            MessageBox.Show("게임을 처음부터 다시 시작합니다");
+            inputNumber.Text = "";
+            _statusCheckGame = true;
+            _countGame = 0;
+            
         }
     }
 }
