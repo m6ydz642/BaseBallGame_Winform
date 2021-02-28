@@ -27,8 +27,15 @@ namespace BaseBallGame_Winform
                 return;
 
             // MessageBox.Show("버튼을 클릭했구만! : " + number.Text); 
-            
-             inputNumber.Text += number.Text;// 형변환해서 넣은 값 text로 꺼낸 후 inputNumber에 텍스트로 담음
+            int lengthNumber = inputNumber.Text.Length;
+            if (lengthNumber < 3)
+            {
+                inputNumber.Text += number.Text;// 형변환해서 넣은 값 text로 꺼낸 후 inputNumber에 텍스트로 담음
+            }
+            else{
+                MessageBox.Show("더 이상 수를 입력할 수 없습니다 3자리까지만 허용됩니다");
+            }
+
         }
 
         private void Form1_Load(object sender, EventArgs e) // 폼로드
@@ -45,10 +52,23 @@ namespace BaseBallGame_Winform
         {
             int numberLength = inputNumber.Text.Length;
 
-            
-            if (numberLength <= 3)
-                // 사용자 입력값을 배열로 받아서 한칸씩 지우면됨
-                inputNumber.Text = "삭제요청";
+            try
+            {
+                if (numberLength >= 1)
+                {
+                    inputNumber.Text = inputNumber.Text.Remove(numberLength - 1);
+                }
+                else if (numberLength <= 0)
+                {
+                    MessageBox.Show("더 이상 지울 수 있는 수가 없습니다");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("숫자 Back 예외오류 뜸 : " + ex);
+                MessageBox.Show("숫자 back 알 수 없는 오류가 발생하였습니다 ");
+            }
+
         }
     }
 }
