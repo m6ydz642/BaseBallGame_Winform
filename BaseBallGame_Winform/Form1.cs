@@ -167,12 +167,34 @@ namespace BaseBallGame_Winform
                 if (_countGame <= 1) // 1회차에만 문구 나오게
                     listViewGameStart.Items.Add("게임을 시작합니다");
 
-              string inputNumberString = inputNumber.Text;
-                
+               char[] inputNumberString = inputNumber.Text.ToCharArray(); // string input box내용  char로 변환
 
-                //   Console.WriteLine(inputNumberArray);
-                //                 _inputNumberSave =inputNumberArray;
 
+                // int[] convertNumber = new int[3];
+                /* convertNumber[0] = Convert.ToChar(inputNumberString[0]);
+                 convertNumber[1] = Convert.ToChar(inputNumberString[1]);
+                 convertNumber[2] = Convert.ToChar(inputNumberString[2]);*/
+
+
+                /*
+                 *             string test =  inputNumber.Text;
+                 *             int[] myint = new int[3];
+                int[] convertNumber = new int[3];*/
+                //    myint = Array.ConvertAll<string, int>(test, int.Parse);// string[] to int []
+
+
+                _inputNumberSave = new int[3]; // new 연산자로 영역 생성안하니까 null뜨면서 안들어가짐 
+                  
+
+                //  _inputNumberSave[0] = Convert.ToChar(convertNumber[0]);
+                _inputNumberSave[0] = Convert.ToInt32(inputNumberString[0]); 
+                _inputNumberSave[1] = Convert.ToInt32(inputNumberString[1]); 
+                _inputNumberSave[2] = Convert.ToInt32(inputNumberString[2]);
+
+                Console.WriteLine("inputnumber save : " + _inputNumberSave[0]);
+                Console.WriteLine("inputnumber save : " + _inputNumberSave[1]);
+                Console.WriteLine("inputnumber save : " + _inputNumberSave[2]);
+                   compareRandnumber_inputNumber(); // 랜덤값, 입력값 비교
 
                 listViewGameStart.Items.Add(_countGame + "회차 " + inputNumber.Text);
                // inputNumber.Text = ""; // 키패드 값 삭제
@@ -191,8 +213,38 @@ namespace BaseBallGame_Winform
 
 
         }
-        
 
+        private void compareRandnumber_inputNumber() // 비교함수
+        {
+
+            for (int i = 0; i < 3; i++)
+            {
+            
+                Console.WriteLine("_inputNumberSave : " + (int)Convert.ToChar(_inputNumberSave[i]));
+                Console.WriteLine("_saveRandomNumber : " + _saveRandomNumber[i]);
+                if (_saveRandomNumber[i].Equals((int)Convert.ToChar(_inputNumberSave[i])))
+                {
+                    Console.WriteLine("같음 ");
+
+                }
+                else
+                {
+                    Console.WriteLine("값이 다름");
+                }
+
+                if (_inputNumberSave[i] == _saveRandomNumber[i])
+                {
+                    MessageBox.Show("값이 같군요!");
+                    Console.WriteLine("같군요 _inputNumberSave : " + _inputNumberSave[i]);
+                    Console.WriteLine("같군요 _saveRandomNumber : " + _saveRandomNumber[i]);
+                }
+                else
+                {
+                    Console.WriteLine("값이 같지 않습니다");
+                }
+            }
+
+        }
 
         private bool checkRandomNumber_checkInputNumber(int[] checkInputNumber, int[] checkRandomNumber
            ) //setter에 들어있는 값을 가져와 랜덤함수, 입력값 비교
