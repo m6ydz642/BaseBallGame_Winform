@@ -175,6 +175,7 @@ namespace BaseBallGame_Winform
 
                 string test = inputNumber.Text;
                 Console.WriteLine("test : " + test[0]); // 이렇게 써도 된단말임 
+
                 // test변수가 string인데 inputNumber.Text가 배열 반환이라 가능 
                 // 디자인 영역에 속성쪽에 보면 string[] array로 설정 되어있음 ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ
 
@@ -194,15 +195,21 @@ namespace BaseBallGame_Winform
 
                 _inputNumberSave = new int[3]; // new 연산자로 영역 생성안하니까 null뜨면서 안들어가짐 
 
-            
 
 
-               /*_inputNumberSave[0] = Convert.ToInt32(inputNumberString[0]);
-                _inputNumberSave[1] = Convert.ToInt32(inputNumberString[1]);
-                _inputNumberSave[2] = Convert.ToInt32(inputNumberString[2]);*/
+
+                /*_inputNumberSave[0] = Convert.ToInt32(inputNumberString[0]);
+                 _inputNumberSave[1] = Convert.ToInt32(inputNumberString[1]);
+                 _inputNumberSave[2] = Convert.ToInt32(inputNumberString[2]);*/
+
+                char[] a = new char[3];
+                a[0] = 'A';
+                int[] b = new int[3];
+                b[0] = a[0]; // 이렇게 그냥 별도의 형변환없이 가능
+                Console.WriteLine("b값 int : " + b[0]);
 
 
-                _inputNumberSave[0] = inputNumberString[0]-48; 
+                _inputNumberSave[0] = inputNumberString[0]-48;  // char[] 타입을 int [] 타입으로
                 // 이거 어이없는게 0번(48) 아스키코드를 빼면 현재 숫자가 나옴
                 // 아스키코드로 49는 1인데 이걸 변환하려면 -48을 하면 1이나옴 ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ
 
@@ -211,13 +218,12 @@ namespace BaseBallGame_Winform
                 _inputNumberSave[2] = inputNumberString[2]-48;
 
 
-          
+
+                listViewGameStart.Items.Add(_countGame + "회차 " + inputNumber.Text +"\r\n");
+
                 compareRandnumber_inputNumber(); // 랜덤값, 입력값 비교
-                
 
-
-                listViewGameStart.Items.Add(_countGame + "회차 " + inputNumber.Text);
-               // inputNumber.Text = ""; // 키패드 값 삭제
+                 inputNumber.Text = ""; // 키패드 값 삭제
 
             }
 
@@ -234,8 +240,12 @@ namespace BaseBallGame_Winform
 
         }
 
-        private void compareRandnumber_inputNumber() // 비교함수
+        private void compareRandnumber_inputNumber() // 랜덤값, 입력값 비교함수
         {
+
+            int strike = 0; // 점수
+
+            int ball = 0;
 
             for (int i = 0; i < 3; i++)
             {
@@ -247,9 +257,61 @@ namespace BaseBallGame_Winform
                 }
 
             }
-            
+
+
+            // 랜덤값과 입력값 비교
+
+            for (int i = 0; i < 3; i++)
+
+            {
+
+                for (int j = 0; j < 3; j++)
+
+                {
+
+                    if (_saveRandomNumber[i] == _inputNumberSave[i])
+
+                    {
+
+                        // 자리수, 번호 까지 같으면 strike
+
+                        if (i == j) strike++;
+
+                        else
+
+                        {
+
+                            ball++;
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        
+          // out 생략, 0스트라이크 0볼로 처리하면 됨
+            if (strike == 3)
+
+            {
+                listViewGameStart.Items.Add(strike +"스트라이크" + ball+"볼");
+          // 끝나면  게임 만료처리 해야함
+            }
+
+            else
+
+            {
+
+                listViewGameStart.Items.Add(strike + "스트라이크" + ball + "볼");
+
+            }
 
         }
+
+
+    
 
         private bool checkRandomNumber_checkInputNumber(int[] checkInputNumber, int[] checkRandomNumber
            ) //setter에 들어있는 값을 가져와 랜덤함수, 입력값 비교

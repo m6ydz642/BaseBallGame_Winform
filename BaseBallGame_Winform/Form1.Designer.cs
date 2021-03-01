@@ -180,9 +180,9 @@ namespace BaseBallGame_Winform
             // listViewGameStart
             // 
             this.listViewGameStart.HideSelection = false;
-            this.listViewGameStart.Location = new System.Drawing.Point(343, 89);
+            this.listViewGameStart.Location = new System.Drawing.Point(316, 58);
             this.listViewGameStart.Name = "listViewGameStart";
-            this.listViewGameStart.Size = new System.Drawing.Size(170, 144);
+            this.listViewGameStart.Size = new System.Drawing.Size(228, 230);
             this.listViewGameStart.TabIndex = 13;
             this.listViewGameStart.UseCompatibleStateImageBehavior = false;
             this.listViewGameStart.View = System.Windows.Forms.View.SmallIcon;
