@@ -167,9 +167,11 @@ namespace BaseBallGame_Winform
                 if (_countGame <= 1) // 1회차에만 문구 나오게
                     listViewGameStart.Items.Add("게임을 시작합니다");
 
-               char[] inputNumberString = inputNumber.Text.ToCharArray(); // string input box내용  char로 변환
+              // char[] inputNumberString = inputNumber.Text.ToCharArray(); // string input box내용  char로 변환
+               var inputNumberString = ASCIIEncoding.ASCII.GetBytes(inputNumber.Text.Substring(0)); 
 
 
+              //  myBuffer = ASCIIEncoding.ASCII.GetBytes(inputNumber.Text.Substring(0));
                 // int[] convertNumber = new int[3];
                 /* convertNumber[0] = Convert.ToChar(inputNumberString[0]);
                  convertNumber[1] = Convert.ToChar(inputNumberString[1]);
@@ -184,17 +186,23 @@ namespace BaseBallGame_Winform
 
 
                 _inputNumberSave = new int[3]; // new 연산자로 영역 생성안하니까 null뜨면서 안들어가짐 
-                  
 
-                //  _inputNumberSave[0] = Convert.ToChar(convertNumber[0]);
-                _inputNumberSave[0] = Convert.ToInt32(inputNumberString[0]); 
-                _inputNumberSave[1] = Convert.ToInt32(inputNumberString[1]); 
-                _inputNumberSave[2] = Convert.ToInt32(inputNumberString[2]);
+                Console.WriteLine(System.Text.Encoding.UTF8.GetString(inputNumberString));
 
-                Console.WriteLine("inputnumber save : " + _inputNumberSave[0]);
-                Console.WriteLine("inputnumber save : " + _inputNumberSave[1]);
-                Console.WriteLine("inputnumber save : " + _inputNumberSave[2]);
+              //  _inputNumberSave[0] = System.Text.Encoding.UTF8.GetString(inputNumberString);
+
+
+                _inputNumberSave[0] = Convert.ToInt32(inputNumberString[0]);
+                _inputNumberSave[1] = (int)inputNumberString[1];
+                _inputNumberSave[2] = (int)inputNumberString[2];
+
+
+                Console.WriteLine("inputnumber save : " + (int)_inputNumberSave[0]);
+                Console.WriteLine("inputnumber save : " + (int)_inputNumberSave[1]);
+                Console.WriteLine("inputnumber save : " + (int)_inputNumberSave[2]);
                    compareRandnumber_inputNumber(); // 랜덤값, 입력값 비교
+                
+
 
                 listViewGameStart.Items.Add(_countGame + "회차 " + inputNumber.Text);
                // inputNumber.Text = ""; // 키패드 값 삭제
@@ -222,7 +230,7 @@ namespace BaseBallGame_Winform
             
                 Console.WriteLine("_inputNumberSave : " + (int)Convert.ToChar(_inputNumberSave[i]));
                 Console.WriteLine("_saveRandomNumber : " + _saveRandomNumber[i]);
-                if (_saveRandomNumber[i].Equals((int)Convert.ToChar(_inputNumberSave[i])))
+                if (_saveRandomNumber[i] == (int)Convert.ToInt32(_inputNumberSave[i]))
                 {
                     Console.WriteLine("같음 ");
 
