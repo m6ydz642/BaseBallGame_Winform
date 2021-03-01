@@ -167,40 +167,52 @@ namespace BaseBallGame_Winform
                 if (_countGame <= 1) // 1회차에만 문구 나오게
                     listViewGameStart.Items.Add("게임을 시작합니다");
 
-              // char[] inputNumberString = inputNumber.Text.ToCharArray(); // string input box내용  char로 변환
-               var inputNumberString = ASCIIEncoding.ASCII.GetBytes(inputNumber.Text.Substring(0)); 
+               char[] inputNumberString = inputNumber.Text.ToCharArray(); // string input box내용  char로 변환
+                // 각 자리수로 비교하기 위해서 char로 변환
+                // 근데 그냥 string inputNumberString = inputNumber.text 한 후 비교할때는 (input)inputNumberString
+                // 해서 형변환 후 사용해도 상관은 없는데 getter, setter에 담을 형태가 int라 이렇게 변환해서 씀
+                // int 배열에 안담고 바로 사용하려면 그냥 형변환해서 쓰면 됨
+
+                string test = inputNumber.Text;
+                Console.WriteLine("test : " + test[0]); // 이렇게 써도 된단말임 
+                // test변수가 string인데 inputNumber.Text가 배열 반환이라 가능 
+                // 디자인 영역에 속성쪽에 보면 string[] array로 설정 되어있음 ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ
+
+               /* string test2 = "test";
+                test2[0];*/ // 이건 안됨 
 
 
-              //  myBuffer = ASCIIEncoding.ASCII.GetBytes(inputNumber.Text.Substring(0));
-                // int[] convertNumber = new int[3];
-                /* convertNumber[0] = Convert.ToChar(inputNumberString[0]);
-                 convertNumber[1] = Convert.ToChar(inputNumberString[1]);
-                 convertNumber[2] = Convert.ToChar(inputNumberString[2]);*/
+                // 아래는 개 뻘짓거리
+             /*  string test = inputNumber.Text; // string input box내용  char로 변환
+                                               // var inputNumberString = ASCIIEncoding.ASCII.GetBytes(inputNumber.Text.Substring(0)); 
+                char[] test2 = test.ToCharArray();
 
-
-                /*
-                 *             string test =  inputNumber.Text;
-                 *             int[] myint = new int[3];
-                int[] convertNumber = new int[3];*/
-                //    myint = Array.ConvertAll<string, int>(test, int.Parse);// string[] to int []
+                int[] test3 = Array.ConvertAll(test2, s => Convert.ToInt32(s));*/
+        
+    
 
 
                 _inputNumberSave = new int[3]; // new 연산자로 영역 생성안하니까 null뜨면서 안들어가짐 
 
-                Console.WriteLine(System.Text.Encoding.UTF8.GetString(inputNumberString));
-
-              //  _inputNumberSave[0] = System.Text.Encoding.UTF8.GetString(inputNumberString);
+            
 
 
-                _inputNumberSave[0] = Convert.ToInt32(inputNumberString[0]);
-                _inputNumberSave[1] = (int)inputNumberString[1];
-                _inputNumberSave[2] = (int)inputNumberString[2];
+               /*_inputNumberSave[0] = Convert.ToInt32(inputNumberString[0]);
+                _inputNumberSave[1] = Convert.ToInt32(inputNumberString[1]);
+                _inputNumberSave[2] = Convert.ToInt32(inputNumberString[2]);*/
 
 
-                Console.WriteLine("inputnumber save : " + (int)_inputNumberSave[0]);
-                Console.WriteLine("inputnumber save : " + (int)_inputNumberSave[1]);
-                Console.WriteLine("inputnumber save : " + (int)_inputNumberSave[2]);
-                   compareRandnumber_inputNumber(); // 랜덤값, 입력값 비교
+                _inputNumberSave[0] = inputNumberString[0]-48; 
+                // 이거 어이없는게 0번(48) 아스키코드를 빼면 현재 숫자가 나옴
+                // 아스키코드로 49는 1인데 이걸 변환하려면 -48을 하면 1이나옴 ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ
+
+                                                    
+                _inputNumberSave[1] = inputNumberString[1]-48;
+                _inputNumberSave[2] = inputNumberString[2]-48;
+
+
+          
+                compareRandnumber_inputNumber(); // 랜덤값, 입력값 비교
                 
 
 
@@ -227,30 +239,15 @@ namespace BaseBallGame_Winform
 
             for (int i = 0; i < 3; i++)
             {
-            
-                Console.WriteLine("_inputNumberSave : " + (int)Convert.ToChar(_inputNumberSave[i]));
-                Console.WriteLine("_saveRandomNumber : " + _saveRandomNumber[i]);
-                if (_saveRandomNumber[i] == (int)Convert.ToInt32(_inputNumberSave[i]))
+
+                if (_saveRandomNumber[i] == _inputNumberSave[i])
                 {
                     Console.WriteLine("같음 ");
 
                 }
-                else
-                {
-                    Console.WriteLine("값이 다름");
-                }
 
-                if (_inputNumberSave[i] == _saveRandomNumber[i])
-                {
-                    MessageBox.Show("값이 같군요!");
-                    Console.WriteLine("같군요 _inputNumberSave : " + _inputNumberSave[i]);
-                    Console.WriteLine("같군요 _saveRandomNumber : " + _saveRandomNumber[i]);
-                }
-                else
-                {
-                    Console.WriteLine("값이 같지 않습니다");
-                }
             }
+            
 
         }
 
