@@ -298,7 +298,14 @@ namespace BaseBallGame_Winform
             if (strike == 3)
 
             {
-                listViewGameStart.Items.Add(strike +"스트라이크" + ball+"볼");
+                listViewGameStart.Items.Add(strike +"스트라이크" + ball+"볼" + " ");
+                listViewGameStart.Items.Add("사용자 승리!!!!!!!!!!!!!! ");
+
+               
+             //   string[] result = new string [listViewGameStart.Items.Count];
+
+
+             
           // 끝나면  게임 만료처리 해야함
             }
 
@@ -306,9 +313,43 @@ namespace BaseBallGame_Winform
 
             {
 
-                listViewGameStart.Items.Add(strike + "스트라이크" + ball + "볼");
+                listViewGameStart.Items.Add(strike + "스트라이크" + ball + "볼" + " ");
 
             }
+
+        }
+
+        private void insertDB()
+        {
+            string result = "";
+          
+            for (int i = 0; i < listViewGameStart.Items.Count; i++) // 반복문으로 리스트 뷰  가져옴
+            {
+             
+                ListViewItem item = listViewGameStart.Items[i];
+                Console.WriteLine(item.Text.ToString());
+                result += item.Text.ToString();
+                /*  string test =  listViewGameStart.Items[i].Text.ToString(); // 이렇게 해도 됨
+                    Console.WriteLine(test);*/
+              
+            }
+
+
+            String database = "Data Source=DESKTOP-DEVELOP;Initial Catalog=BaseBallGameWinform_DB;Integrated Security=SSPI";
+            // Initial Catalog는 DB이름이고
+            // Data Source=해서 들어가는 이름은 DB의 서버이름임
+            // ㅅㅂ 윈도우인증 sql인증 몰라서 접속 계속 못함
+
+            SqlConnection connection = new SqlConnection(database);
+            connection.Open();
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = connection;
+            cmd.CommandText = "INSERT ScoreTable VALUES( '" + result + "')";
+            cmd.ExecuteNonQuery();
+
+
+            Console.WriteLine("result : " + result);
+          
 
         }
 
@@ -386,11 +427,18 @@ namespace BaseBallGame_Winform
             return checkNumber;
         }
 
+
         private void buttonDBConnect_Click(object sender, EventArgs e) // DB버튼 클릭했을시
         {
             DataSet dataSet = connectDB();
             dataGridView1.DataSource = dataSet.Tables[0];
-           
+          
+
+        }
+
+        private void button1_Click(object sender, EventArgs e) // DB값 입력
+        {
+            insertDB();
         }
     }
 }
