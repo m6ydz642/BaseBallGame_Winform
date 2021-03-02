@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -39,6 +40,7 @@ namespace BaseBallGame_Winform
             setRandomNumber();
             Console.WriteLine("생성자 초기화 값 _countGame : " + _countGame);
             Console.WriteLine("생성자 초기화 값 _statusCheckGame : " + _statusCheckGame);
+      
         }
 
 
@@ -310,7 +312,29 @@ namespace BaseBallGame_Winform
 
         }
 
+        private DataSet connectDB()
+        {
+            String database = "Data Source=DESKTOP-DEVELOP;Initial Catalog=BaseBallGameWinform_DB;Integrated Security=SSPI";
+            // Initial Catalog는 DB이름이고
+            // Data Source=해서 들어가는 이름은 DB의 서버이름임
+            // ㅅㅂ 윈도우인증 sql인증 몰라서 접속 계속 못함
 
+            SqlConnection connection = new SqlConnection(database);
+            connection.Open();
+            Console.WriteLine("DB연결객체 : " + connection);
+
+
+            SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(
+               "SELECT * from ScoreTable", connection);
+
+            DataSet dataSet = new DataSet();
+            // sqlDataAdapter.Fill(dataSet, "Employees");
+            sqlDataAdapter.Fill(dataSet);
+            /*     DataGrid1.DataSource = dataSet.Tables["Employees"].DefaultView;
+                 DataGrid1.DataBind();*/
+
+            return dataSet;
+        }
     
 
         private bool checkRandomNumber_checkInputNumber(int[] checkInputNumber, int[] checkRandomNumber
@@ -360,6 +384,13 @@ namespace BaseBallGame_Winform
             }
 
             return checkNumber;
+        }
+
+        private void buttonDBConnect_Click(object sender, EventArgs e) // DB버튼 클릭했을시
+        {
+            DataSet dataSet = connectDB();
+            dataGridView1.DataSource = dataSet.Tables[0];
+           
         }
     }
 }

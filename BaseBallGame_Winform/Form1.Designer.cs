@@ -45,6 +45,9 @@ namespace BaseBallGame_Winform
             this.listViewGameStart = new System.Windows.Forms.ListView();
             this.inputNumber = new System.Windows.Forms.TextBox();
             this.textRandomNumber = new System.Windows.Forms.TextBox();
+            this.buttonDBConnect = new System.Windows.Forms.Button();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // key1
@@ -204,11 +207,32 @@ namespace BaseBallGame_Winform
             this.textRandomNumber.Size = new System.Drawing.Size(100, 21);
             this.textRandomNumber.TabIndex = 16;
             // 
+            // buttonDBConnect
+            // 
+            this.buttonDBConnect.Location = new System.Drawing.Point(234, 227);
+            this.buttonDBConnect.Name = "buttonDBConnect";
+            this.buttonDBConnect.Size = new System.Drawing.Size(75, 23);
+            this.buttonDBConnect.TabIndex = 17;
+            this.buttonDBConnect.Text = "DB값 조회";
+            this.buttonDBConnect.UseVisualStyleBackColor = true;
+            this.buttonDBConnect.Click += new System.EventHandler(this.buttonDBConnect_Click);
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(570, 58);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowTemplate.Height = 23;
+            this.dataGridView1.Size = new System.Drawing.Size(240, 230);
+            this.dataGridView1.TabIndex = 18;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(608, 320);
+            this.ClientSize = new System.Drawing.Size(832, 320);
+            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.buttonDBConnect);
             this.Controls.Add(this.textRandomNumber);
             this.Controls.Add(this.inputNumber);
             this.Controls.Add(this.listViewGameStart);
@@ -228,6 +252,7 @@ namespace BaseBallGame_Winform
             this.Name = "Form1";
             this.Text = "숫자야구게임";
             this.Load += new System.EventHandler(this.Form1_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -251,6 +276,8 @@ namespace BaseBallGame_Winform
         private System.Windows.Forms.ListView listViewGameStart;
         private System.Windows.Forms.TextBox inputNumber;
         private System.Windows.Forms.TextBox textRandomNumber;
+        private System.Windows.Forms.Button buttonDBConnect;
+        private System.Windows.Forms.DataGridView dataGridView1;
     }
 }
 
