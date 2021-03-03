@@ -2,7 +2,7 @@ using NUnit.Framework;
 
 namespace NUnitTestProject_BaseBallGame_Winform
 {
-    public class Tests
+    public class Tests : Form1
     {
         [SetUp]
         public void Setup()
@@ -12,7 +12,7 @@ namespace NUnitTestProject_BaseBallGame_Winform
         [Test]
         public void Test1()
         {
-            Assert.Pass();
+            Assert.AreEqual(_save) ;
         }
     }
 }

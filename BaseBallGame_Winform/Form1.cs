@@ -37,7 +37,7 @@ namespace BaseBallGame_Winform
 
             listViewGameStart.Items.Clear();
             //            textRandomNumber.Text = setRandomNumber().ToString(); // 컴퓨터가 만드는 랜덤함수 생성 호출 
-            setRandomNumber();
+         
             Console.WriteLine("생성자 초기화 값 _countGame : " + _countGame);
             Console.WriteLine("생성자 초기화 값 _statusCheckGame : " + _statusCheckGame);
       
@@ -108,7 +108,7 @@ namespace BaseBallGame_Winform
 
         private void Form1_Load(object sender, EventArgs e) // 폼로드
         {
-    
+            setRandomNumber();
         }
 
         private void buttonClean_Click(object sender, EventArgs e) // 키패드 내용 전체삭제
