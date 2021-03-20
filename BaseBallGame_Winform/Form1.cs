@@ -335,7 +335,7 @@ namespace BaseBallGame_Winform
             }
 
 
-            String database = "Data Source=DESKTOP-DEVELOP;Initial Catalog=BaseBallGameWinform_DB;Integrated Security=SSPI";
+            String database = "Data Source=DESKTOP-Main;Initial Catalog=BaseBallGameWinform_DB;Integrated Security=SSPI";
             // Initial Catalog는 DB이름이고
             // Data Source=해서 들어가는 이름은 DB의 서버이름임
             // ㅅㅂ 윈도우인증 sql인증 몰라서 접속 계속 못함
@@ -355,7 +355,7 @@ namespace BaseBallGame_Winform
 
         private DataSet connectDB()
         {
-            String database = "Data Source=DESKTOP-DEVELOP;Initial Catalog=BaseBallGameWinform_DB;Integrated Security=SSPI";
+            String database = "Data Source=DESKTOP-Main;Initial Catalog=BaseBallGameWinform_DB;Integrated Security=SSPI";
             // Initial Catalog는 DB이름이고
             // Data Source=해서 들어가는 이름은 DB의 서버이름임
             // ㅅㅂ 윈도우인증 sql인증 몰라서 접속 계속 못함
