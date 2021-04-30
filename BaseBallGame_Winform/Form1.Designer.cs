@@ -224,7 +224,7 @@ namespace BaseBallGame_Winform
             this.dataGridView1.Location = new System.Drawing.Point(570, 58);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(240, 230);
+            this.dataGridView1.Size = new System.Drawing.Size(489, 230);
             this.dataGridView1.TabIndex = 18;
             // 
             // button1
@@ -241,7 +241,7 @@ namespace BaseBallGame_Winform
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(832, 320);
+            this.ClientSize = new System.Drawing.Size(1088, 320);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.buttonDBConnect);

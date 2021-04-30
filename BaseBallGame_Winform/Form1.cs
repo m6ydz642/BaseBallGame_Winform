@@ -31,16 +31,13 @@ namespace BaseBallGame_Winform
         
         public Form1() // 기본생성자
         {
-          InitializeComponent();
-          _countGame = 0; // 0회차 부터 (게임 시작시 1부터 ++해서 카운트 할거임
+            InitializeComponent();
+           _countGame = 0; // 0회차 부터 (게임 시작시 1부터 ++해서 카운트 할거임
            _statusCheckGame = true;
 
             listViewGameStart.Items.Clear();
-            //            textRandomNumber.Text = setRandomNumber().ToString(); // 컴퓨터가 만드는 랜덤함수 생성 호출 
-         
-            Console.WriteLine("생성자 초기화 값 _countGame : " + _countGame);
-            Console.WriteLine("생성자 초기화 값 _statusCheckGame : " + _statusCheckGame);
-      
+            DataSet dataSet = connectDB();
+            dataGridView1.DataSource = dataSet.Tables[0];
         }
 
 
@@ -49,15 +46,11 @@ namespace BaseBallGame_Winform
             Random random = new Random();
             int[] setRandomNumber = new int [3];
             for (int i = 0; i < 3; i++)
-
             {
-
                 setRandomNumber[i] = random.Next(1,10); // 랜덤난수 배열에 삽입 
                 
                 for (int j = 0; j < i; j++)
-
                 {
-
                     if (setRandomNumber[j] == setRandomNumber[i]) i--; // 비교후 동일하면 다시 반복문
                     // 중복이 발견되어 --처리하면 출력은 중복 으로 뜨지만 실제 배열에는
                     // 중복이 안들어가있음
@@ -70,10 +63,6 @@ namespace BaseBallGame_Winform
 
 
             }
-
-   /*         Console.WriteLine("test = " + setRandomNumber[0]);
-            Console.WriteLine("test = " + setRandomNumber[1]);
-            Console.WriteLine("test = " + setRandomNumber[2]);*/
             return setRandomNumber;
         }
 
@@ -86,12 +75,9 @@ namespace BaseBallGame_Winform
 
             if(_statusCheckGame)
             {
-               
-
             int lengthNumber = inputNumber.Text.Length;
             if (lengthNumber < 3)
             {
-              //  _statusCheckGame = false; // 이새키가 여기 왜있냐 ㅡㅡ;
                 inputNumber.Text += number.Text;// 형변환해서 넣은 값 text로 꺼낸 후 inputNumber에 텍스트로 담음
             }
             else{
@@ -141,18 +127,13 @@ namespace BaseBallGame_Winform
 
         private void buttonRetry_Click(object sender, EventArgs e) // 게임 재시작
         {
-
-  
             listViewGameStart.Items.Clear();
-            listViewGameStart.Items.Add("게임을 다시 시작합니다");
             MessageBox.Show("게임을 처음부터 다시 시작합니다");
             inputNumber.Text = "";
             _statusCheckGame = true;
             _countGame = 0;
             textRandomNumber.Text = "";
             setRandomNumber();
-
-
         }
 
         private void buttonStart_Click(object sender, EventArgs e) // 게임시작 버튼
@@ -179,30 +160,10 @@ namespace BaseBallGame_Winform
                 Console.WriteLine("test : " + test[0]); // 이렇게 써도 된단말임 
 
                 // test변수가 string인데 inputNumber.Text가 배열 반환이라 가능 
-                // 디자인 영역에 속성쪽에 보면 string[] array로 설정 되어있음 ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ
-
-               /* string test2 = "test";
-                test2[0];*/ // 이건 안됨 
-
-
-                // 아래는 개 뻘짓거리
-             /*  string test = inputNumber.Text; // string input box내용  char로 변환
-                                               // var inputNumberString = ASCIIEncoding.ASCII.GetBytes(inputNumber.Text.Substring(0)); 
-                char[] test2 = test.ToCharArray();
-
-                int[] test3 = Array.ConvertAll(test2, s => Convert.ToInt32(s));*/
-        
-    
-
+                // 디자인 영역에 속성쪽에 보면 string[] array로 설정 되어있음
 
                 _inputNumberSave = new int[3]; // new 연산자로 영역 생성안하니까 null뜨면서 안들어가짐 
 
-
-
-
-                /*_inputNumberSave[0] = Convert.ToInt32(inputNumberString[0]);
-                 _inputNumberSave[1] = Convert.ToInt32(inputNumberString[1]);
-                 _inputNumberSave[2] = Convert.ToInt32(inputNumberString[2]);*/
 
                 char[] a = new char[3];
                 a[0] = 'A';
@@ -213,7 +174,7 @@ namespace BaseBallGame_Winform
 
                 _inputNumberSave[0] = inputNumberString[0]-48;  // char[] 타입을 int [] 타입으로
                 // 이거 어이없는게 0번(48) 아스키코드를 빼면 현재 숫자가 나옴
-                // 아스키코드로 49는 1인데 이걸 변환하려면 -48을 하면 1이나옴 ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ
+                // 아스키코드로 49는 1인데 이걸 변환하려면 -48을 하면 1이나옴
 
                                                     
                 _inputNumberSave[1] = inputNumberString[1]-48;
@@ -229,13 +190,10 @@ namespace BaseBallGame_Winform
 
             }
 
-            if (_countGame >= 9)
+            if (_countGame >= 9 || _statusCheckGame == false)
             // 9회차이상이고 게임 _statusCheckGame false처리하면 아래 조건문 조건에 안맞아서 안들어감
             {
                 MessageBox.Show("게임이 끝났습니다");
-
-                // 여기에 점수 계산 결과 기록하면 됨
-
                 _statusCheckGame = false;
             }
 
@@ -246,45 +204,24 @@ namespace BaseBallGame_Winform
         {
 
             int strike = 0; // 점수
-
             int ball = 0;
-
-            for (int i = 0; i < 3; i++)
-            {
-
-                if (_saveRandomNumber[i] == _inputNumberSave[i])
-                {
-                    Console.WriteLine("같음 ");
-
-                }
-
-            }
 
 
             // 랜덤값과 입력값 비교
 
             for (int i = 0; i < 3; i++)
-
             {
-
                 for (int j = 0; j < 3; j++)
-
                 {
-
-                    if (_saveRandomNumber[i] == _inputNumberSave[i])
-
+                    if (_saveRandomNumber[i] == _inputNumberSave[j])
                     {
-
                         // 자리수, 번호 까지 같으면 strike
 
                         if (i == j) strike++;
 
                         else
-
                         {
-
                             ball++;
-
                         }
 
                     }
@@ -296,23 +233,15 @@ namespace BaseBallGame_Winform
         
           // out 생략, 0스트라이크 0볼로 처리하면 됨
             if (strike == 3)
-
             {
-                listViewGameStart.Items.Add(strike +"스트라이크" + ball+"볼" + " ");
+                listViewGameStart.Items.Add(strike +"스트라이크" + ball + "볼" + " ");
                 listViewGameStart.Items.Add("사용자 승리!!!!!!!!!!!!!! ");
-
+                _statusCheckGame = false;
+                MessageBox.Show("사용자가 승리하여 게임이 종료되었습니다");
                
-             //   string[] result = new string [listViewGameStart.Items.Count];
-
-
-             
-          // 끝나면  게임 만료처리 해야함
             }
-
             else
-
             {
-
                 listViewGameStart.Items.Add(strike + "스트라이크" + ball + "볼" + " ");
 
             }
@@ -329,8 +258,6 @@ namespace BaseBallGame_Winform
                 ListViewItem item = listViewGameStart.Items[i];
                 Console.WriteLine(item.Text.ToString());
                 result += item.Text.ToString();
-                /*  string test =  listViewGameStart.Items[i].Text.ToString(); // 이렇게 해도 됨
-                    Console.WriteLine(test);*/
               
             }
 
@@ -357,8 +284,7 @@ namespace BaseBallGame_Winform
         {
             String database = "Data Source=DESKTOP-Develop ;Initial Catalog=BaseBallGameWinform_DB;Integrated Security=SSPI";
             // Initial Catalog는 DB이름이고
-            // Data Source=해서 들어가는 이름은 DB의 서버이름임
-            // ㅅㅂ 윈도우인증 sql인증 몰라서 접속 계속 못함
+            // Data Source=해서 들어가는 이름은 DB의 서버이름
 
             SqlConnection connection = new SqlConnection(database);
             connection.Open();
@@ -369,10 +295,7 @@ namespace BaseBallGame_Winform
                "SELECT * from ScoreTable", connection);
 
             DataSet dataSet = new DataSet();
-            // sqlDataAdapter.Fill(dataSet, "Employees");
             sqlDataAdapter.Fill(dataSet);
-            /*     DataGrid1.DataSource = dataSet.Tables["Employees"].DefaultView;
-                 DataGrid1.DataBind();*/
 
             return dataSet;
         }
@@ -384,14 +307,9 @@ namespace BaseBallGame_Winform
             bool checkStatus = false;
 
             for (int i = 0; i < 3; i++)
-
             {
-
-
                 for (int j = 0; j < i; j++)
-
-                {
-
+                {                    
                     if (checkInputNumber[j] == checkRandomNumber[i])
                         checkStatus = false; 
 
