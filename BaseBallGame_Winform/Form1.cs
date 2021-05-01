@@ -14,7 +14,7 @@ namespace BaseBallGame_Winform
     public partial class Form1 : Form
     {
         int _countGame; // 게임카운트
-         bool _statusCheckGame; // 게임 상태 활성화 여부
+        bool _statusCheckGame; // 게임 상태 활성화 여부
 
         int[] _inputNumberSave // 사용자로부터 입력받은 점수 저장용 (비교할때 꺼내쓸 용도)
         {
@@ -41,48 +41,50 @@ namespace BaseBallGame_Winform
         }
 
 
-        public int[] setRandomNumber() // 컴퓨터가 생성하는 랜덤함수
+       
+       
+
+        private void Form1_Load(object sender, EventArgs e) // 폼로드
         {
-            Random random = new Random();
-            int[] setRandomNumber = new int [3];
-            for (int i = 0; i < 3; i++)
-            {
-                setRandomNumber[i] = random.Next(1,10); // 랜덤난수 배열에 삽입 
-                
-                for (int j = 0; j < i; j++)
-                {
-                    if (setRandomNumber[j] == setRandomNumber[i]) i--; // 비교후 동일하면 다시 반복문
-                    // 중복이 발견되어 --처리하면 텍스트 출력은 중복 으로 뜨지만 실제 배열에는
-                    // 중복이 안들어가있음
-                }
-                _saveRandomNumber = setRandomNumber; // setter에 저장
-                textRandomNumber.Text += setRandomNumber[i]; // 메인화면에 랜덤함수 생성된거 보여줌
-                                                             // 왜 그냥 textRanDomNumber.Text = setRandomNumber[i]는 안되냐.....
-
-           
-
-
-            }
-            return setRandomNumber;
+            setRandomNumber();
         }
 
+        #region 버튼클릭 이벤트
+        /*******************************************************************************************/
+        private void 저장ToolStripMenuItem_Click(object sender, EventArgs e) // 메뉴 -> 저장
+        {
+            SaveFileDialog savePanel = new SaveFileDialog();
+            savePanel.FileName = "";
+            savePanel.Filter = "txt(*.txt)|*.txt | All files (*.*)|(*.*)";
+
+            if (savePanel.ShowDialog() == DialogResult.OK)
+            {
+                // string content = listViewGameStart.;
+
+                MessageBox.Show("저장 되었습니다");
+            }
+
+
+
+        }
         private void clickNumber(object sender, EventArgs e) // 버튼클릭했을때 이벤트 (임의로 만듦)
         {
             var number = sender as Button; // object sender를 Button으로 형변환 후 number에 담음
-            
+
             if (number == null)
                 return;
 
-            if(_statusCheckGame)
+            if (_statusCheckGame)
             {
-            int lengthNumber = inputNumber.Text.Length;
-            if (lengthNumber < 3)
-            {
-                inputNumber.Text += number.Text;// 형변환해서 넣은 값 text로 꺼낸 후 inputNumber에 텍스트로 담음
-            }
-            else{
-                MessageBox.Show("더 이상 수를 입력할 수 없습니다 3자리까지만 허용됩니다");
-            }
+                int lengthNumber = inputNumber.Text.Length;
+                if (lengthNumber < 3)
+                {
+                    inputNumber.Text += number.Text;// 형변환해서 넣은 값 text로 꺼낸 후 inputNumber에 텍스트로 담음
+                }
+                else
+                {
+                    MessageBox.Show("더 이상 수를 입력할 수 없습니다 3자리까지만 허용됩니다");
+                }
 
             } // 게임상태 체크 if문 + else
             else
@@ -90,11 +92,6 @@ namespace BaseBallGame_Winform
                 MessageBox.Show("게임이 이미 끝났습니다");
 
             }
-        }
-
-        private void Form1_Load(object sender, EventArgs e) // 폼로드
-        {
-            setRandomNumber();
         }
 
         private void buttonClean_Click(object sender, EventArgs e) // 키패드 내용 전체삭제
@@ -203,6 +200,50 @@ namespace BaseBallGame_Winform
 
         }
 
+        private void buttonDBConnect_Click(object sender, EventArgs e) // DB버튼 클릭했을시
+        {
+            DataSet dataSet = connectDB();
+            dataGridView1.DataSource = dataSet.Tables[0];
+
+
+        }
+
+        private void button1_Click(object sender, EventArgs e) // DB값 입력
+        {
+            insertDB();
+        }
+
+        #endregion
+
+        #region 동작관련 함수
+        /*******************************************************************************************/
+
+        public int[] setRandomNumber() // 컴퓨터가 생성하는 랜덤함수
+        {
+            Random random = new Random();
+            int[] setRandomNumber = new int[3];
+            for (int i = 0; i < 3; i++)
+            {
+                setRandomNumber[i] = random.Next(1, 10); // 랜덤난수 배열에 삽입 
+
+                for (int j = 0; j < i; j++)
+                {
+                    if (setRandomNumber[j] == setRandomNumber[i]) i--; // 비교후 동일하면 다시 반복문
+                    // 중복이 발견되어 --처리하면 텍스트 출력은 중복 으로 뜨지만 실제 배열에는
+                    // 중복이 안들어가있음
+                }
+                _saveRandomNumber = setRandomNumber; // setter에 저장
+                textRandomNumber.Text += setRandomNumber[i]; // 메인화면에 랜덤함수 생성된거 보여줌
+                                                             // 왜 그냥 textRanDomNumber.Text = setRandomNumber[i]는 안되냐.....
+
+
+
+
+            }
+            return setRandomNumber;
+        }
+
+
         private void compareRandnumber_inputNumber() // 랜덤값, 입력값 비교함수 (점수 환산용)
         {
 
@@ -250,33 +291,8 @@ namespace BaseBallGame_Winform
             }
 
         }
-
- 
-    
-
-        private bool checkRandomNumber_checkInputNumber(int[] checkInputNumber, 
-            int[] checkRandomNumber) //setter에 들어있는 값을 가져와 랜덤함수, 입력값 비교하여 중복체크
-        {
-            bool checkStatus = false;
-
-            for (int i = 0; i < 3; i++)
-            {
-                for (int j = 0; j < i; j++)
-                {                    
-                    if (checkInputNumber[j] == checkRandomNumber[i])
-                        checkStatus = false; 
-
-
-                    else checkStatus = true;
-                    
-                }
-
-
-
-            }
-
-            return checkStatus;
-        }
+        /*******************************************************************************************/
+        #endregion         
 
         #region 입력 값 체크
         /*******************************************************************************************/
@@ -329,22 +345,6 @@ namespace BaseBallGame_Winform
         }
         /*******************************************************************************************/
         #endregion
-
-
-        private void buttonDBConnect_Click(object sender, EventArgs e) // DB버튼 클릭했을시
-        {
-            DataSet dataSet = connectDB();
-            dataGridView1.DataSource = dataSet.Tables[0];
-          
-
-        }
-
-        private void button1_Click(object sender, EventArgs e) // DB값 입력
-        {
-            insertDB();
-        }
-
-
 
         #region DB접속 관련
         /*******************************************************************************************/
@@ -402,5 +402,6 @@ namespace BaseBallGame_Winform
         /*******************************************************************************************/
         #endregion
 
+     
     }
 }
