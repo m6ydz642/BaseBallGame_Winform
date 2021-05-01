@@ -37,7 +37,7 @@ namespace BaseBallGame_Winform
 
             listViewGameStart.Items.Clear();
             DataSet dataSet = connectDB();
-            dataGridView1.DataSource = dataSet.Tables[0];
+            dataGridView1.DataSource = dataSet.Tables[0]; // DataGrid에 DB호출
         }
 
 
@@ -52,7 +52,7 @@ namespace BaseBallGame_Winform
                 for (int j = 0; j < i; j++)
                 {
                     if (setRandomNumber[j] == setRandomNumber[i]) i--; // 비교후 동일하면 다시 반복문
-                    // 중복이 발견되어 --처리하면 출력은 중복 으로 뜨지만 실제 배열에는
+                    // 중복이 발견되어 --처리하면 텍스트 출력은 중복 으로 뜨지만 실제 배열에는
                     // 중복이 안들어가있음
                 }
                 _saveRandomNumber = setRandomNumber; // setter에 저장
@@ -138,12 +138,10 @@ namespace BaseBallGame_Winform
 
         private void buttonStart_Click(object sender, EventArgs e) // 게임시작 버튼
         {
-            bool checkInputNumber = checkNumberLength(); // 입력받은 번호 개수 체크함수
-         /*  bool checkAllNumber = checkRandomNumber_checkInputNumber(_inputNumberSave, 
-           _saveRandomNumber);*/
+            bool checkInputCountNumber = checkNumberLength(); // 입력받은 번호 개수 체크함수
 
-            if (checkInputNumber && _countGame < 9 && _statusCheckGame) 
-                // 자릿수가 맞고 게임이 시작중이고 회차가 9회미만이라면
+            if (checkInputCountNumber && _countGame < 9 && _statusCheckGame) 
+                // 입력된 자릿수가 맞고 게임이 시작중, 회차가 9회미만이라면
             {
 
                 _countGame++; // 게임 회차 카운트
@@ -157,7 +155,8 @@ namespace BaseBallGame_Winform
                 // int 배열에 안담고 바로 사용하려면 그냥 형변환해서 쓰면 됨
 
                 string test = inputNumber.Text;
-                Console.WriteLine("test : " + test[0]); // 이렇게 써도 된단말임 
+                Console.WriteLine("test : " + test[0]); // 이렇게 써도 됨 string에서 array 로 변환 됨
+
 
                 // test변수가 string인데 inputNumber.Text가 배열 반환이라 가능 
                 // 디자인 영역에 속성쪽에 보면 string[] array로 설정 되어있음
@@ -180,13 +179,17 @@ namespace BaseBallGame_Winform
                 _inputNumberSave[1] = inputNumberString[1]-48;
                 _inputNumberSave[2] = inputNumberString[2]-48;
 
+                bool CheckInputDuplicateNumber = CheckInputNumberDuplicate(_inputNumberSave); // 입력 값 중복 체크
+                if (CheckInputDuplicateNumber)
+                {
 
+                    listViewGameStart.Items.Add(_countGame + "회차 " + inputNumber.Text + "\r\n");
 
-                listViewGameStart.Items.Add(_countGame + "회차 " + inputNumber.Text +"\r\n");
+                    compareRandnumber_inputNumber(); // 랜덤값, 입력값 비교
 
-                compareRandnumber_inputNumber(); // 랜덤값, 입력값 비교
-
-                 inputNumber.Text = ""; // 키패드 값 삭제
+                    inputNumber.Text = ""; // 키패드 값 삭제
+                }
+          
 
             }
 
@@ -200,7 +203,7 @@ namespace BaseBallGame_Winform
 
         }
 
-        private void compareRandnumber_inputNumber() // 랜덤값, 입력값 비교함수
+        private void compareRandnumber_inputNumber() // 랜덤값, 입력값 비교함수 (점수 환산용)
         {
 
             int strike = 0; // 점수
@@ -248,61 +251,11 @@ namespace BaseBallGame_Winform
 
         }
 
-        private void insertDB()
-        {
-            string result = "";
-          
-            for (int i = 0; i < listViewGameStart.Items.Count; i++) // 반복문으로 리스트 뷰  가져옴
-            {
-             
-                ListViewItem item = listViewGameStart.Items[i];
-                Console.WriteLine(item.Text.ToString());
-                result += item.Text.ToString();
-              
-            }
-
-
-            String database = "Data Source=DESKTOP-Develop;Initial Catalog=BaseBallGameWinform_DB;Integrated Security=SSPI";
-            // Initial Catalog는 DB이름이고
-            // Data Source=해서 들어가는 이름은 DB의 서버이름임
-            // ㅅㅂ 윈도우인증 sql인증 몰라서 접속 계속 못함
-
-            SqlConnection connection = new SqlConnection(database);
-            connection.Open();
-            SqlCommand cmd = new SqlCommand();
-            cmd.Connection = connection;
-            cmd.CommandText = "INSERT ScoreTable VALUES( '" + result + "')";
-            cmd.ExecuteNonQuery();
-
-
-            Console.WriteLine("result : " + result);
-          
-
-        }
-
-        private DataSet connectDB()
-        {
-            String database = "Data Source=DESKTOP-Develop ;Initial Catalog=BaseBallGameWinform_DB;Integrated Security=SSPI";
-            // Initial Catalog는 DB이름이고
-            // Data Source=해서 들어가는 이름은 DB의 서버이름
-
-            SqlConnection connection = new SqlConnection(database);
-            connection.Open();
-            Console.WriteLine("DB연결객체 : " + connection);
-
-
-            SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(
-               "SELECT * from ScoreTable", connection);
-
-            DataSet dataSet = new DataSet();
-            sqlDataAdapter.Fill(dataSet);
-
-            return dataSet;
-        }
+ 
     
 
-        private bool checkRandomNumber_checkInputNumber(int[] checkInputNumber, int[] checkRandomNumber
-           ) //setter에 들어있는 값을 가져와 랜덤함수, 입력값 비교
+        private bool checkRandomNumber_checkInputNumber(int[] checkInputNumber, 
+            int[] checkRandomNumber) //setter에 들어있는 값을 가져와 랜덤함수, 입력값 비교하여 중복체크
         {
             bool checkStatus = false;
 
@@ -325,6 +278,8 @@ namespace BaseBallGame_Winform
             return checkStatus;
         }
 
+        #region 입력 값 체크
+        /*******************************************************************************************/
         private bool checkNumberLength() // 자리수 체크 함수
         {
             bool checkNumber = false;
@@ -345,6 +300,36 @@ namespace BaseBallGame_Winform
             return checkNumber;
         }
 
+        private bool CheckInputNumberDuplicate(int [] InputNumber) // 자리수 입력값 중복체크
+        {
+            bool checkStatus = false;
+
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < i; j++)
+                {
+                    if (InputNumber[j] == InputNumber[i])
+                    {
+                        checkStatus = false;
+                        i = 3;
+                        break;
+                    }
+                    else checkStatus = true;
+
+                }
+            }
+
+            if (checkStatus == false)
+            {
+         
+             MessageBox.Show("입력숫자가 중복입니다");
+           
+            }
+            return checkStatus;
+        }
+        /*******************************************************************************************/
+        #endregion
+
 
         private void buttonDBConnect_Click(object sender, EventArgs e) // DB버튼 클릭했을시
         {
@@ -358,5 +343,64 @@ namespace BaseBallGame_Winform
         {
             insertDB();
         }
+
+
+
+        #region DB접속 관련
+        /*******************************************************************************************/
+        private void insertDB()
+        {
+            string result = "";
+
+            for (int i = 0; i < listViewGameStart.Items.Count; i++) // 반복문으로 리스트 뷰  가져옴
+            {
+
+                ListViewItem item = listViewGameStart.Items[i];
+                Console.WriteLine(item.Text.ToString());
+                result += item.Text.ToString();
+
+            }
+
+
+            String database = "Data Source=DESKTOP-Develop;Initial Catalog=BaseBallGameWinform_DB;Integrated Security=SSPI";
+            // Initial Catalog는 DB이름이고
+            // Data Source=해서 들어가는 이름은 DB의 서버이름임
+            // ㅅㅂ 윈도우인증 sql인증 몰라서 접속 계속 못함
+
+            SqlConnection connection = new SqlConnection(database);
+            connection.Open();
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = connection;
+            cmd.CommandText = "INSERT ScoreTable VALUES( '" + result + "')";
+            cmd.ExecuteNonQuery();
+
+
+            Console.WriteLine("result : " + result);
+
+
+        }
+
+        private DataSet connectDB()
+        {
+            String database = "Data Source=DESKTOP-Develop ;Initial Catalog=BaseBallGameWinform_DB;Integrated Security=SSPI";
+            // Initial Catalog는 DB이름이고
+            // Data Source=해서 들어가는 이름은 DB의 서버이름
+
+            SqlConnection connection = new SqlConnection(database);
+            connection.Open();
+            Console.WriteLine("DB연결객체 : " + connection);
+
+
+            SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(
+               "SELECT * from ScoreTable", connection);
+
+            DataSet dataSet = new DataSet();
+            sqlDataAdapter.Fill(dataSet);
+
+            return dataSet;
+        }
+        /*******************************************************************************************/
+        #endregion
+
     }
 }
